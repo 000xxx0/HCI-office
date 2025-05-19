@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class Door : MonoBehaviour
+public class DoorIterator : MonoBehaviour
 {
     public string doorLayerName = "Door";
-    public TMP_Text interactPrompt; // Drag your UI Text here in the Inspector
+    public TMP_Text interactPrompt;
 
     void Start()
     {

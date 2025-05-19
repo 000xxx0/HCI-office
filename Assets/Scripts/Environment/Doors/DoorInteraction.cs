@@ -1,7 +1,8 @@
 using UnityEngine;
 using TMPro;
 using Invector.vCharacterController;
-public class DoorInteraction : MonoBehaviour
+
+public class DoorInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private TMP_Text interactPrompt;
     [SerializeField] private Transform teleportDestination; // Drag the destination here in the Inspector

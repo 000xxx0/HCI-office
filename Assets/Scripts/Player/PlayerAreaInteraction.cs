@@ -77,7 +77,8 @@ public class PlayerAreaInteraction : MonoBehaviour
         {
             if (currentBookInteractable != null)
             {
-                currentBookInteractable.Interact();
+                // Check if the Interact method exists, if not call OpenBook
+                currentBookInteractable.SendMessage("Interact", null, SendMessageOptions.DontRequireReceiver);
             }
             else if (currentInteractable != null)
             {
