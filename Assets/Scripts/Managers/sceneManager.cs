@@ -87,7 +87,7 @@ public class SceneManager : MonoBehaviour
         float time = 0;
 
         while (time < fadeTime)
-        {
+        {   
             time += Time.deltaTime;
             fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeTime);
             yield return null;

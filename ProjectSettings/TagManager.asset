@@ -8,6 +8,7 @@ TagManager:
   - wall_wood
   - wall_brick
   - metal
+  - Book
   layers:
   - Default
   - TransparentFX
