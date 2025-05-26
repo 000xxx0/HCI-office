@@ -9,6 +9,7 @@ TagManager:
   - wall_brick
   - metal
   - Book
+  - Lift
   layers:
   - Default
   - TransparentFX

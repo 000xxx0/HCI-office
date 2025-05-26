@@ -173,7 +173,7 @@ PrefabInstance:
     - target: {fileID: 838884078848460545, guid: 03824129bbc05a14a95f2df3bfe84c0a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 89011d1b17a46b840ba3fd5e1dd1d2cf, type: 3}
+      objectReference: {fileID: 21300000, guid: 32da61755eca6904fa60cebe3d6367e2, type: 3}
     - target: {fileID: 838884078848460545, guid: 03824129bbc05a14a95f2df3bfe84c0a, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -297,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 2884820958494946648, guid: 03824129bbc05a14a95f2df3bfe84c0a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 33c92c3d9f2c3c747bbfb2b0fc3263d9, type: 3}
+      objectReference: {fileID: 21300000, guid: 8c3a1a9bb735a8e4dbd00d3ab2a33267, type: 3}
     - target: {fileID: 2884820958494946648, guid: 03824129bbc05a14a95f2df3bfe84c0a, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -360,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608071482476900035, guid: 03824129bbc05a14a95f2df3bfe84c0a, type: 3}
       propertyPath: allPages.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4608071482476900035, guid: 03824129bbc05a14a95f2df3bfe84c0a, type: 3}
       propertyPath: allPages.Array.data[2]

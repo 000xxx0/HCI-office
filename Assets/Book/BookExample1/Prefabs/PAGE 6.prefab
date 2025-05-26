@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5673371133799709714}
   - component: {fileID: -894432229310144545}
   m_Layer: 5
-  m_Name: PAGE 2
+  m_Name: PAGE 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168a1a29216b22e4a9356bf54abbfa0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 2
+  number: 1
 --- !u!1 &8184937689849564340
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +85,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 232, y: -0.000030517578}
+  m_AnchoredPosition: {x: 232, y: 0}
   m_SizeDelta: {x: 466.073, y: 508.9666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8184937689849564344
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 32da61755eca6904fa60cebe3d6367e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 37552630e7612bd4fa031dce4e39332e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -140,7 +140,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsFirstPage:
   - {fileID: 0}
-  - {fileID: 0}
-  objectsLastPage:
-  - {fileID: 0}
-  - {fileID: 0}
+  objectsLastPage: []
