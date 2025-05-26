@@ -4,21 +4,50 @@ using TMPro;
 public class FloorInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private TMP_Text interactPrompt;
-    private string targetSceneName = "DTE2";
+    private string targetSceneName;
     private KeyCode interactKey = KeyCode.E;
     private bool isInteractable = true;
 
-    public void SetupInteraction(TMP_Text prompt, string sceneName, KeyCode interactKey)
+    void Start()
+    {
+        // This will be called after SetupInteraction
+        UpdateTargetBasedOnCurrentScene();
+    }
+
+    public void SetupInteraction(TMP_Text prompt, string defaultSceneName, KeyCode interactKey)
     {
         this.interactPrompt = prompt;
-        this.targetSceneName = sceneName;
+        this.targetSceneName = defaultSceneName;
         this.interactKey = interactKey;
+        
+        // Update the target scene if we're already in the scene specified
+        UpdateTargetBasedOnCurrentScene();
+    }
+
+    private void UpdateTargetBasedOnCurrentScene()
+    {
+        // Get current scene name
+        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        
+        // If we're in DTE2, set target to DTE
+        if (currentScene == "DTE2")
+        {
+            targetSceneName = "DTE";
+        }
+        // If we're in DTE, set target to DTE2
+        else if (currentScene == "DTE")
+        {
+            targetSceneName = "DTE2";
+        }
+        // For any other scene, keep the default
     }
 
     public void Interact()
     {
         if (isInteractable)
         {
+            Debug.Log($"Lift activated. Loading scene: {targetSceneName}");
+            
             if (SceneManager.Instance != null)
             {
                 SceneManager.Instance.LoadScene(targetSceneName);
@@ -35,7 +64,9 @@ public class FloorInteraction : MonoBehaviour, IInteractable
     {
         if (interactPrompt != null)
         {
-            interactPrompt.text = $"Press {interactKey} to use lift";
+            // Get the floor name from the target scene
+            string floorName = targetSceneName == "DTE" ? "First Floor" : "Second Floor";
+            interactPrompt.text = $"Press {interactKey} to use lift to {floorName}";
         }
     }
 
@@ -49,7 +80,7 @@ public class FloorInteraction : MonoBehaviour, IInteractable
 public class FloorIterator : MonoBehaviour
 {
     public TMP_Text interactPrompt;
-    [SerializeField] private string targetSceneName = "DTE2";
+    [SerializeField] private string defaultSceneName = "DTE2";
     [SerializeField] private KeyCode interactKey = KeyCode.E;
 
     void Start()
@@ -80,7 +111,7 @@ public class FloorIterator : MonoBehaviour
 
             floorInteraction.SetupInteraction(
                 interactPrompt,
-                targetSceneName,
+                defaultSceneName,
                 interactKey
             );
             

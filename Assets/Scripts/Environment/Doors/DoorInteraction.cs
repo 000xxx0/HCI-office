@@ -75,12 +75,31 @@ public class DoorInteraction : MonoBehaviour, IInteractable
     public void ShowPrompt()
     {
         if (interactPrompt != null)
+        {
             interactPrompt.text = "Press E to interact with door";
+
+            // Optional: Add visual highlight
+            Renderer renderer = GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                // Store original material color if needed
+                renderer.material.color = Color.yellow; // Highlight color
+            }
+        }
     }
 
     public void HidePrompt()
     {
         if (interactPrompt != null)
+        {
             interactPrompt.text = "";
+
+            // Remove highlight
+            Renderer renderer = GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = Color.white; // Original color
+            }
+        }
     }
 }

@@ -4,61 +4,103 @@ using System.Collections.Generic;
 public class PlayerAreaInteraction : MonoBehaviour
 {
     public float interactionRadius = 2f;
-    public DoorInteraction currentInteractable;
-    private DoorInteraction lastInteractable;
-    public BookInteraction currentBookInteractable;
-    private BookInteraction lastBookInteractable;
     
-    // Keep track of all interactable objects we've shown prompts for
+    // Interaction objects
+    public DoorInteraction currentDoorInteractable;
+    public BookInteraction currentBookInteractable;
+    public FloorInteraction currentFloorInteractable;
+    
+    // Keep track of all interactable objects
     private List<DoorInteraction> activeDoorInteractables = new List<DoorInteraction>();
     private List<BookInteraction> activeBookInteractables = new List<BookInteraction>();
+    private List<FloorInteraction> activeFloorInteractables = new List<FloorInteraction>();
+
+    // For distance-based selection
+    private Transform nearestInteractable = null;
+    private float nearestDistance = float.MaxValue;
 
     void Update()
     {
         // Clear current interactables
-        currentInteractable = null;
+        currentDoorInteractable = null;
         currentBookInteractable = null;
+        currentFloorInteractable = null;
         
-        // Save lists of previous active interactables so we can hide prompts for objects no longer in range
+        // Save lists of previous active interactables
         List<DoorInteraction> previousDoorInteractables = new List<DoorInteraction>(activeDoorInteractables);
         List<BookInteraction> previousBookInteractables = new List<BookInteraction>(activeBookInteractables);
+        List<FloorInteraction> previousFloorInteractables = new List<FloorInteraction>(activeFloorInteractables);
         
         // Clear the active lists to rebuild them
         activeDoorInteractables.Clear();
         activeBookInteractables.Clear();
+        activeFloorInteractables.Clear();
+
+        // Reset nearest tracking
+        nearestInteractable = null;
+        nearestDistance = float.MaxValue;
 
         // Find all interactables in range
         Collider[] hits = Physics.OverlapSphere(transform.position, interactionRadius);
         
         foreach (var hit in hits)
         {
+            // Calculate distance to this object
+            float distance = Vector3.Distance(transform.position, hit.transform.position);
+            
+            // Check for doors
             DoorInteraction door = hit.GetComponent<DoorInteraction>();
             if (door != null)
             {
                 activeDoorInteractables.Add(door);
-                if (currentInteractable == null) // Use the first door found as current
+                
+                // Track if this is the closest interactable
+                if (distance < nearestDistance)
                 {
-                    currentInteractable = door;
-                    door.ShowPrompt();
+                    nearestDistance = distance;
+                    nearestInteractable = hit.transform;
+                    currentDoorInteractable = door;
                 }
             }
             
+            // Check for books
             BookInteraction book = hit.GetComponent<BookInteraction>();
             if (book != null)
             {
                 activeBookInteractables.Add(book);
-                if (currentBookInteractable == null) // Use the first book found as current
+                
+                // Track if this is the closest interactable
+                if (distance < nearestDistance)
                 {
+                    nearestDistance = distance;
+                    nearestInteractable = hit.transform;
+                    currentDoorInteractable = null; // Clear door if book is closer
                     currentBookInteractable = book;
-                    book.ShowPrompt();
+                }
+            }
+            
+            // Check for floor/lift interactions
+            FloorInteraction floor = hit.GetComponent<FloorInteraction>();
+            if (floor != null)
+            {
+                activeFloorInteractables.Add(floor);
+                
+                // Track if this is the closest interactable
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestInteractable = hit.transform;
+                    currentDoorInteractable = null; // Clear door if floor is closer
+                    currentBookInteractable = null; // Clear book if floor is closer
+                    currentFloorInteractable = floor;
                 }
             }
         }
         
-        // Hide prompts for any interactables that are no longer in range
+        // Hide prompts for any interactables that are no longer the nearest
         foreach (var door in previousDoorInteractables)
         {
-            if (!activeDoorInteractables.Contains(door))
+            if (door != currentDoorInteractable)
             {
                 door.HidePrompt();
             }
@@ -66,23 +108,60 @@ public class PlayerAreaInteraction : MonoBehaviour
         
         foreach (var book in previousBookInteractables)
         {
-            if (!activeBookInteractables.Contains(book))
+            if (book != currentBookInteractable)
             {
                 book.HidePrompt();
             }
         }
+        
+        foreach (var floor in previousFloorInteractables)
+        {
+            if (floor != currentFloorInteractable)
+            {
+                floor.HidePrompt();
+            }
+        }
+        
+        // Show prompt only for the nearest interactable
+        if (currentBookInteractable != null)
+        {
+            currentBookInteractable.ShowPrompt();
+        }
+        else if (currentFloorInteractable != null)
+        {
+            currentFloorInteractable.ShowPrompt();
+        }
+        else if (currentDoorInteractable != null)
+        {
+            currentDoorInteractable.ShowPrompt();
+        }
 
-        // Handle input - prioritize books over doors
+        // Handle input with priority: Book > Floor > Door
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (currentBookInteractable != null)
+            float minimumInteractionDistance = 3.0f; // Adjust as needed
+            
+            if (currentBookInteractable != null && nearestDistance <= minimumInteractionDistance)
             {
-                // Check if the Interact method exists, if not call OpenBook
-                currentBookInteractable.SendMessage("Interact", null, SendMessageOptions.DontRequireReceiver);
+                currentBookInteractable.Interact();
             }
-            else if (currentInteractable != null)
+            else if (currentFloorInteractable != null && nearestDistance <= minimumInteractionDistance)
             {
-                currentInteractable.Interact();
+                currentFloorInteractable.Interact();
+            }
+            else if (currentDoorInteractable != null && nearestDistance <= minimumInteractionDistance)
+            {
+                currentDoorInteractable.Interact();
+            }
+        }
+        
+        // Debug section - ADD THIS
+        foreach (var hit in hits)
+        {
+            if (hit.GetComponent<DoorInteraction>() != null)
+            {
+                Debug.DrawLine(transform.position, hit.transform.position, Color.red);
+                Debug.Log($"Door detected: {hit.name} at distance {Vector3.Distance(transform.position, hit.transform.position)}");
             }
         }
     }

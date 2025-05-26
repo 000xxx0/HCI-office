@@ -723,7 +723,7 @@ MonoBehaviour:
   bookTitleText: {fileID: 0}
   bookContentText: {fileID: 0}
   closeButton: {fileID: 0}
-  mainSceneName: MainScene
+  mainSceneName: DTE
 --- !u!1 &2016192862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,8 +1264,10 @@ MonoBehaviour:
   allPages:
   - {fileID: 1614604426663951072, guid: e50a654ab4ad26e4d9769deb3a942241, type: 3}
   - {fileID: 1614604426663951072, guid: f0f192118bba8f548bf2f93f2471b27e, type: 3}
+  - {fileID: 1614604426663951072, guid: d217c851a31d1ad408b105771bf453ed, type: 3}
+  - {fileID: 1614604426663951072, guid: 34f61832a5f274d4b8bb85a0a83071f5, type: 3}
   pageContainer: {fileID: 3405960004536799316}
-  rotatePage: 0
+  rotatePage: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class BookSceneController : MonoBehaviour
     [SerializeField] private TMP_Text bookTitleText;
     [SerializeField] private TMP_Text bookContentText;
     [SerializeField] private Button closeButton;
-    [SerializeField] private string mainSceneName = "MainScene";
+    [SerializeField] private string mainSceneName = "DTE2";
     
     void Start()
     {
